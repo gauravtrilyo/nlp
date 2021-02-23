@@ -49,7 +49,9 @@ class Database {
 	 */
 	connect() {
 		return new Promise((resolve, reject) => {
-			mongoose.connect(this.url, { useNewUrlParser: true });
+			mongoose.connect(this.url, { useNewUrlParser: true, "auth": {
+				"authSource": "admin"
+			  } });
 			const db = mongoose.connection;
 			db.on('error', () => reject(new Error('Connection error')));
 			db.once('open', () => resolve());
