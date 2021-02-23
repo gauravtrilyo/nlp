@@ -205,7 +205,7 @@ export default defineMessages({
   },
   webhookUrlPlaceholder: {
     id: 'containers.IntentPage.create_agent.webhook_url_placeholder',
-    defaultMessage: 'http://localhost:3000',
+    defaultMessage: 'http://143.110.191.95:3010',
   },
   webhookPayloadType: {
     id: 'containers.IntentPage.create_agent.webhook_payload_type',

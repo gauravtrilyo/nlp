@@ -1,6 +1,6 @@
 {
   "swagger": "2.0",
-  "host": "localhost:3000",
+  "host": "143.110.191.95:3010",
   "basePath": "/api/",
   "schemes": ["http"],
   "info": {
