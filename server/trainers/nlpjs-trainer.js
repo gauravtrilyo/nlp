@@ -211,7 +211,7 @@ class NlpjsTrainer {
 				let answers = result.answers;
 				for (let i in answers) {
 					let resp = answers[i];
-					let responseEval = evaluate(resp.answer);
+					let responseEval = this.evaluate(resp.answer);
 					if (responseEval) {
 						result.answer = responseEval;
 						break;
@@ -268,7 +268,30 @@ class NlpjsTrainer {
 		}
 		return manager.process(text, session.context);
 	}
+	/**
+	 * Evaluates the string based on condtions
+	 * @param {*} string 
+	 */
+
+	evaluate(string) {
+		if (string.startsWith("[")) {
+			let temp = string.split("]");
+			let text = temp[1];
+			let exp  = temp[0].substring(1);
+			try {
+				if (eval(exp)) {
+					return text.trim();
+				}
+			} catch(e) {
+				return null;
+			}
+			
+		}
+		return null;
+	}
 }
+
+
 
 const instance = new NlpjsTrainer();
 
