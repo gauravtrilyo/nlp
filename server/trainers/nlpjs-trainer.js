@@ -203,6 +203,7 @@ class NlpjsTrainer {
 				languages.push(domain.language);
 			}
 		});
+		let self = this;
 		const manager = new NlpManager({
 			...useNeuralSettings,
 			languages,
@@ -211,7 +212,7 @@ class NlpjsTrainer {
 				let answers = result.answers;
 				for (let i in answers) {
 					let resp = answers[i];
-					let responseEval = this.evaluate(resp.answer);
+					let responseEval = self.evaluate(resp.answer);
 					if (responseEval) {
 						result.answer = responseEval;
 						break;
