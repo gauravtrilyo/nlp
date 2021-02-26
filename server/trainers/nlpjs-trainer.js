@@ -267,6 +267,8 @@ class NlpjsTrainer {
 		if (!manager) {
 			throw new Error('Unknown manager');
 		}
+		console.log("SESSION.CONTEXT", context);
+		
 		return manager.process(text, session.context);
 	}
 	/**
