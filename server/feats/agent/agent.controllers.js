@@ -567,6 +567,7 @@ async function converseContext(request) {
       }
     };
   }
+  logger.debug(agentId, sessionAny.any, text, context);
   const answer = await app.converse(agentId, sessionAny.any, text, context);
 
   logger.debug({ answer });
