@@ -551,6 +551,9 @@ async function converseContext(request) {
   }
   const { sessionId } = request.query;
   const { text, context } = request.payload;
+  
+  logger.debug(text, context);
+
   let sessionAny = await app.database.findOne(Model.Session, {
     'any.agentId': agentId,
     'any.sessionId': sessionId
