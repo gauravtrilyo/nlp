@@ -550,7 +550,7 @@ async function converseContext(request) {
     app.loadTraining(agentId, model);
   }
   const { sessionId } = request.query;
-  const { text, context } = JSON.parse(request.payload);
+  const { text, context } = request.payload;
   let sessionAny = await app.database.findOne(Model.Session, {
     'any.agentId': agentId,
     'any.sessionId': sessionId
