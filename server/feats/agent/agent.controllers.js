@@ -560,11 +560,11 @@ async function converseContext(request) {
       any: {
         agentId,
         sessionId,
-        context
+        context : {}
       }
     };
   }
-  const answer = await app.converse(agentId, sessionAny.any, text);
+  const answer = await app.converse(agentId, sessionAny.any, text, context);
 
   logger.debug({ answer });
 

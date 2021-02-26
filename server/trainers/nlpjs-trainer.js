@@ -262,13 +262,21 @@ class NlpjsTrainer {
 	 * @param {object} session Session instance.
 	 * @param {string} text Utterance text.
 	 */
-	converse(agentId, session, text) {
+	converse(agentId, session, text, serverContext = null) {
 		const manager = this.managers[agentId];
 		if (!manager) {
 			throw new Error('Unknown manager');
 		}
-		console.log("SESSION.CONTEXT", session.context);
-
+		if (!session.context) {
+			session.context = {}
+		};
+		if (serverContext) {
+			for (let i in serverContext) {
+				session.context[i] = serverContext[i]
+			}
+		}
+		console.log("Session.context", session.context);
+		
 		return manager.process(text, session.context);
 	}
 	/**
