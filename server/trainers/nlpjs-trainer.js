@@ -24,6 +24,9 @@
 const childProcess = require('child_process');
 const { NlpManager } = require('node-nlp');
 const { useNeuralSettings } = require('./nlpjs-settings');
+const Logger = require('../../common/logger');
+const logger = Logger.getInstance();
+
 
 /**
  * Class for a NLP.JS trainer
