@@ -269,10 +269,11 @@ class NlpjsTrainer {
 		if (!manager) {
 			throw new Error('Unknown manager');
 		}
-		if (!session.context) {
-			session.context = {}
-		};
-		if (serverContext) {
+		
+		if (serverContext && Object.keys(serverContext).length > 0) {
+			if (!session.context) {
+				session.context = {}
+			};
 			for (let i in serverContext) {
 				session.context[i] = serverContext[i]
 			}
