@@ -205,7 +205,20 @@ class NlpjsTrainer {
 		});
 		const manager = new NlpManager({
 			...useNeuralSettings,
-			languages
+			languages,
+			forceNER:true,
+			processTransformer : function (result) {
+				let answers = result.answers;
+				for (let i in answers) {
+					let resp = answers[i];
+					let responseEval = evaluate(resp.answer);
+					if (responseEval) {
+						result.answer = responseEval;
+						break;
+					}
+				}
+				return result;
+			}
 		});
 		// eslint-disable-next-line no-underscore-dangle
 		this.managers[data.agent._id] = manager;

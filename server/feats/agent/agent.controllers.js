@@ -533,6 +533,58 @@ async function converse(request) {
   return answer;
 }
 
+/**
+ * Converse with an agent.
+ * @param {object} request Request.
+ */
+async function converseContext(request) {
+  const agentId = request.params.id;
+  if (!app.existsTraining(agentId)) {
+    const training = await app.database.findOne(Model.Training, {
+      'any.agentId': agentId
+    });
+    if (!training) {
+      return app.error(404, 'Agent training not found');
+    }
+    const model = JSON.parse(training.any.model);
+    app.loadTraining(agentId, model);
+  }
+  const { sessionId } = request.query;
+  const { text } = request.query;
+  let sessionAny = await app.database.findOne(Model.Session, {
+    'any.agentId': agentId,
+    'any.sessionId': sessionId
+  });
+  if (!sessionAny) {
+    sessionAny = {
+      any: {
+        agentId,
+        sessionId,
+        context: {}
+      }
+    };
+  }
+  const answer = await app.converse(agentId, sessionAny.any, text);
+
+  logger.debug({ answer });
+
+  if (answer.intent === 'None') {
+    const fallbackResponse = await getFallbackResponse(agentId);
+
+    answer.srcAnswer = fallbackResponse;
+    answer.answer = fallbackResponse;
+    answer.textResponse = fallbackResponse;
+  } else if (answer.srcAnswer && isUsingSlots(answer.srcAnswer)) {
+    answer.textResponse = await processSlots(answer, agentId);
+  } else {
+    answer.textResponse = answer.answer;
+  }
+
+  await app.database.save(Model.Session, sessionAny);
+
+  return answer;
+}
+
 async function readContentHierarchyFromDb(agentId, headers) {
   const contentMatrix = [headers];
   const agent = await app.database.findById(Model.Agent, agentId);
@@ -645,6 +697,7 @@ module.exports = {
   findEntityByIdByAgentId,
   train,
   converse,
+  converseContext,
   exportContent,
   updateAgentStatus
 };

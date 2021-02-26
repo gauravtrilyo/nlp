@@ -115,6 +115,11 @@ const routes = {
     '/agent/{id}/converse',
     'Converse with an already trained agent',
   ],
+  converseContext: [
+    'POST',
+    '/agent/{id}/converse',
+    'Converse with an already trained agent',
+  ],
   exportContent: [
     'GET',
     '/agent/{id}/export',
