@@ -216,8 +216,8 @@ class App {
 	 * @param {object} session Session of the conversation.
 	 * @param {string} text Utterance text.
 	 */
-	converse(agentId, session, text) {
-		return trainer.converse(agentId, session, text);
+	converse(agentId, session, text, serverContext) {
+		return trainer.converse(agentId, session, text, serverContext);
 	}
 }
 
