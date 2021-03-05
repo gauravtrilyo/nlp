@@ -277,13 +277,6 @@ class NlpjsTrainer {
 				session.context[i] = serverContext[i]
 			}
 		}
-		if (!session.context.User) {
-			session.context.User = {}
-		}
-		if (!session.context.variables) {
-			session.context.variables = {}
-		}
-		console.log("session.context", session.context);
 		return manager.process(undefined, text, session.context);
 	}
 	/**
