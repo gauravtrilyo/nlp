@@ -7,4 +7,4 @@ mongo_data
 .vscode
 .idea
 npm-debug.log
-
+**.nlp

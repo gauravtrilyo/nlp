@@ -267,15 +267,23 @@ class NlpjsTrainer {
 		if (!manager) {
 			throw new Error('Unknown manager');
 		}
+		if (!session.context) {
+			session.context = {}
+		};
+
 		if (serverContext && Object.keys(serverContext).length > 0) {
-			if (!session.context) {
-				session.context = {}
-			};
+			
 			for (let i in serverContext) {
 				session.context[i] = serverContext[i]
 			}
 		}
-		console.log("serverContext", session.context, serverContext);
+		if (!session.context.User) {
+			session.context.User = {}
+		}
+		if (!session.context.variables) {
+			session.context.variables = {}
+		}
+		console.log("session.context", session.context);
 		return manager.process(undefined, text, session.context);
 	}
 	/**
