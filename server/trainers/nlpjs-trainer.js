@@ -254,7 +254,7 @@ class NlpjsTrainer {
 			model.nerManager.namedEntities = {};
 		}
 		this.managers[agentId].import(model);
-	}
+	} 
 
 	/**
 	 * Converse with a given agent.
@@ -263,14 +263,10 @@ class NlpjsTrainer {
 	 * @param {string} text Utterance text.
 	 */
 	converse(agentId, session, text, serverContext = null) {
-		console.debug("Server context", serverContext);
-
 		const manager = this.managers[agentId];
 		if (!manager) {
 			throw new Error('Unknown manager');
 		}
-		console.log("Session.context", session.context);
-		
 		if (serverContext && Object.keys(serverContext).length > 0) {
 			if (!session.context) {
 				session.context = {}
@@ -279,9 +275,8 @@ class NlpjsTrainer {
 				session.context[i] = serverContext[i]
 			}
 		}
-		console.log("Session.context", session.context);
-
-		return manager.process('en', text, session.context);
+		console.log("serverContext", session.context, serverContext);
+		return manager.process(undefined, text, session.context);
 	}
 	/**
 	 * Evaluates the string based on condtions
